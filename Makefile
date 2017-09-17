@@ -4,6 +4,10 @@ OBJ=main.c graphic.o audio.o tetris.o
 
 all: tetris
 
+test:
+	make
+	./tetris
+
 
 tetris : $(OBJ)
 	gcc $(OBJ) -o tetris -lSDL2
