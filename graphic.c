@@ -2,7 +2,7 @@
 #include "graphic.h"
 #include "tetris.h"
 
-#define WIDTH	190 //TODO set 200, resize image
+#define WIDTH	200
 #define HEIGHT	220
 
 #define BLACK	0
