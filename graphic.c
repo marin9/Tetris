@@ -2,7 +2,7 @@
 #include "graphic.h"
 #include "tetris.h"
 
-#define WIDTH	190
+#define WIDTH	190 //TODO set 200, resize image
 #define HEIGHT	220
 
 #define BLACK	0
@@ -72,15 +72,15 @@ void drawNumber(int num, int x, int y){
 	SDL_Rect drect={x, y, 10, 14};
 
 	char c=0;
-	for(int i=1000000;i>=10;i=i/10){
+	for(int i=1000000; i>=10; i=i/10){
 		int digit=(num/i)%10;
 		if(digit) c=1;
-		srect.x=digit*10;
+		srect.x=10+digit*10;
 		if(c) SDL_RenderCopy(renderer, gameImage, &srect, &drect);
 		drect.x+=10;
 	}
 
-	srect.x=(num%10)*10;
+	srect.x=10+(num%10)*10;
 	SDL_RenderCopy(renderer, gameImage, &srect, &drect);
 }
 
@@ -97,14 +97,15 @@ void renderMenu(int hi_sc, char level, char showNext, char soundOn){
 
 	//draw board
 	SDL_RenderCopy(renderer, gameImage, NULL, NULL);
+	drawRect(10, 195, 100, 14, BLACK);
 
 	//draw Hi-Score
-	drawNumber(hi_sc, 120, 22);//TODO
+	drawNumber(hi_sc, 120, 22);
 
 	//draw Next
 	if(showNext){
-		drawRect(120+10, 80+10, 30, 10, PURPLE);
-		drawRect(120+20, 80+20, 10, 10, PURPLE);
+		drawRect(130+10, 80+10, 30, 10, PURPLE);
+		drawRect(130+20, 80+20, 10, 10, PURPLE);
 	}
 
 	//draw Level
@@ -112,8 +113,12 @@ void renderMenu(int hi_sc, char level, char showNext, char soundOn){
 
 	//sound icon
 	if(!soundOn){
-		drawRect(120, 170, 25, 25, BLACK);
+		drawRect(120, 170, 25, 26, BLACK);
 	}
+
+	drawRect(160, 170, 25, 26, BLACK);
+
+	drawRect(120, 200, 70, 10, BLACK);
 
 	SDL_SetRenderTarget(renderer, NULL);
 	SDL_Rect rr={0, 0, WIDTH*scale, HEIGHT*scale};
@@ -158,32 +163,25 @@ void renderGame(int hi_sc, char soundOn){
 	if(next!=NULL){
 		for(int y=0;y<4;++y){
 			for(int x=0;x<4;++x){
-				drawRect(120+10*x, 80+10*y, 10, 10, *(next+x+y*4));
+				drawRect(130+10*x, 80+10*y, 10, 10, *(next+x+y*4));
 			}
 		}
 	}
 
 	//draw Level
 	drawNumber(getLevel(), 120, 130);
-//TODO (
+
 	if(!soundOn){
-		SDL_Rect sr={60, 0, 30, 34};
-		SDL_Rect dr={120, 150, 30, 34};
-		SDL_RenderCopy(renderer, gameImage, &sr, &dr);
+		drawRect(120, 170, 25, 26, BLACK);
 	}
 
-	if(isPaused()){
-		SDL_Rect sr={100, 0, 30, 34};
-		SDL_Rect dr={160, 150, 30, 34};
-		SDL_RenderCopy(renderer, gameImage, &sr, &dr);
+	if(!isPaused()){
+		drawRect(160, 170, 25, 26, BLACK);
 	}
 
-	if(isGameOver()){
-		SDL_Rect sr={100, 200, 30, 20};
-		SDL_Rect dr={137, 190, 30, 20};
-		SDL_RenderCopy(renderer, gameImage, &sr, &dr);
+	if(!isGameOver()){
+		drawRect(120, 200, 70, 10, BLACK);
 	}
-//TODO )
 
 	SDL_SetRenderTarget(renderer, NULL);
 	SDL_Rect rr={0, 0, WIDTH*scale, HEIGHT*scale};
