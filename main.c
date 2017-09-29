@@ -48,7 +48,7 @@ void getInput(){
 
 			}else if(key==SDLK_r){
 				scale=(++scale)%5;
-				if(scale==0) scale=1;			
+				if(scale==0) scale=1;
 				setResolution(scale);
 			}
 			else if(key==SDLK_s){
@@ -73,8 +73,8 @@ void getInput(){
 				setMusic(soundOn);
 
 			}else if(key==SDLK_p){
-				setPause(!isPaused());	
-				pauseMusic(isPaused());
+				setPause(!isPaused());
+				pauseMusic(isPaused() || !soundOn);
 			}else if(key==SDLK_UP || key==SDLK_LCTRL) rotate();
 			else if(key==SDLK_DOWN) down();
 			else if(key==SDLK_LEFT) left();
